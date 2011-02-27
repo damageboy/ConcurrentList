@@ -1,0 +1,8 @@
+*.suo
+*.userprefs
+ConcurrentList/obj/
+ConcurrentList/bin/
+ConcurrentList.UnitTests/bin/
+ConcurrentList.UnitTests/obj/
+ConcurrentList.PerformanceTests/bin/
+ConcurrentList.PerformanceTests/obj/
