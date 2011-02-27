@@ -1,0 +1,48 @@
+/*
+// ==++==
+// 
+//   Copyright (c) Microsoft Corporation.  All rights reserved.
+// 
+// ==--==
+/* log */
+tr.noisy		{ background-color:#EAEAEA;}
+tr.verbose		{ background-color:#E9E9E9;}
+tr.message		{ background-color:#E9E9E9;}
+tr.warning		{ background-color:#FFFF99;}
+tr.error		
+{ 
+    background-color:#FFDDAA;
+}
+tr.error > td
+{
+    border: solid 1px #FF0000;
+}
+tr.critical		
+{ 
+    background-color:#FFDD99; 
+}
+tr.critical > td
+{
+    border: solid 1px #FF0000;    
+}
+
+tr.noisyvisible		{ background-color:#EAEAEA;}
+tr.verbosevisible		{ background-color:#E9E9E9;}
+tr.messagevisible		{ background-color:#E9E9E9;}
+tr.warningvisible		{ background-color:#FFFF99; }
+tr.errorvisible		    
+{ 
+    background-color:#FFDDAA;
+}
+tr.errorvisible > td
+{
+    border: solid 1px #FF0000;
+}
+tr.criticalvisible		 
+{
+    background-color:#FFDD99; 
+}
+tr.criticalvisible > td
+{
+    border: solid 2px #FF0000;    
+}
