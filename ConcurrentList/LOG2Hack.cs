@@ -2,6 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 namespace ConcurrentList
 {
+  // From: http://www-graphics.stanford.edu/~seander/bithacks.html#IntegerLogIEEE64Float
   [StructLayout(LayoutKind.Explicit)]
   unsafe public struct LOG2Hack
   {
@@ -12,7 +13,6 @@ namespace ConcurrentList
     private fixed int u[2];
     [FieldOffset(0)]
     private double d;
-
 
     public static int Log2 (int v)
     {
