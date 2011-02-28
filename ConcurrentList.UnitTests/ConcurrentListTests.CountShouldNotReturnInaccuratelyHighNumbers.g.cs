@@ -15,10 +15,10 @@ using Microsoft.Pex.Framework.Generated;
 
 namespace ConcurrentList.UnitTests
 {
-  public partial class ConcurrentListTests
+  public partial class ConcurrentListHandWrittenTests
   {
 [Test]
-[PexGeneratedBy(typeof(ConcurrentListTests))]
+[PexGeneratedBy(typeof(ConcurrentListHandWrittenTests))]
 [Ignore("the test state was: path bounds exceeded")]
 public void CountShouldNotReturnInaccuratelyHighNumbers01()
 {

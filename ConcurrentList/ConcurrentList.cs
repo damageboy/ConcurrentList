@@ -29,7 +29,7 @@ namespace ConcurrentList
       }
     }
 
-    int _index;
+    int _nextIndex;
     int _fuzzyCount;
     readonly T[][] _array;
 
@@ -69,22 +69,23 @@ namespace ConcurrentList
 
     public int Count {
       get {
-        int count = _index;
+        //int count = _index;
         
-        if (count > _fuzzyCount) {
-          SpinWait.SpinUntil (() => count <= _fuzzyCount);
-        }
+        //if (count > _fuzzyCount) {
+        //  SpinWait.SpinUntil (() => count <= _fuzzyCount);
+        //}
         
-        return count;
+        //return count;
+        return _fuzzyCount;
       }
     }
 
     public void Add (T element)
     {
-      int index = Interlocked.Increment (ref _index) - 1;
+      int index = Interlocked.Increment (ref _nextIndex) - 1;
       int adjustedIndex = index;
       
-      int arrayIndex = GetArrayIndex (index);
+      int arrayIndex = GetArrayIndex (adjustedIndex);
 
 #if HELL_FROZE_OVER
       var prevCount = 0;
@@ -104,8 +105,25 @@ namespace ConcurrentList
       }
       
       _array[arrayIndex][adjustedIndex] = element;
-      
-      Interlocked.Increment (ref _fuzzyCount);
+
+      // Do a "smart" spin loop, try spinning for a while waiting for the _fuzzyCount to hit the right value
+      // After a while, try sleeping a bit,
+      // once it hits the right value, do a compare and exchange, although it is somewhat superflous at this point
+      // 
+      var spinCount = 0;
+      while (index != _fuzzyCount) {
+        if (++spinCount == 1000) {
+          // Someone is doing insane number of concurrent additions for us to be
+          // stuck so far..., better go sleep for a while to let some other threads progress
+          Thread.Sleep(0);
+          spinCount = 0;
+          continue;
+        }
+      }
+      //Interlocked.Exchange(ref _fuzzyCount, index + 1);
+      if (Interlocked.CompareExchange(ref _fuzzyCount, index + 1, index) == index)
+        return;     
+      throw new Exception("WTF");      
     }
 
     public bool Contains (T element)

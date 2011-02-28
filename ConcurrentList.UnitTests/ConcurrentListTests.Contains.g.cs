@@ -15,24 +15,24 @@ using Microsoft.Pex.Framework.Generated;
 
 namespace ConcurrentList.UnitTests
 {
-  public partial class ConcurrentListTests
+  public partial class ConcurrentListHandWrittenTests
   {
 [Test]
-[PexGeneratedBy(typeof(ConcurrentListTests))]
+[PexGeneratedBy(typeof(ConcurrentListHandWrittenTests))]
 public void Contains985()
 {
     int[] ints = new int[0];
     this.Contains(0, ints);
 }
 [Test]
-[PexGeneratedBy(typeof(ConcurrentListTests))]
+[PexGeneratedBy(typeof(ConcurrentListHandWrittenTests))]
 public void Contains880()
 {
     int[] ints = new int[1];
     this.Contains(0, ints);
 }
 [Test]
-[PexGeneratedBy(typeof(ConcurrentListTests))]
+[PexGeneratedBy(typeof(ConcurrentListHandWrittenTests))]
 public void Contains740()
 {
     int[] ints = new int[1];
@@ -40,14 +40,14 @@ public void Contains740()
     this.Contains(0, ints);
 }
 [Test]
-[PexGeneratedBy(typeof(ConcurrentListTests))]
+[PexGeneratedBy(typeof(ConcurrentListHandWrittenTests))]
 public void Contains71()
 {
     int[] ints = new int[2];
     this.Contains(0, ints);
 }
 [Test]
-[PexGeneratedBy(typeof(ConcurrentListTests))]
+[PexGeneratedBy(typeof(ConcurrentListHandWrittenTests))]
 public void Contains480()
 {
     int[] ints = new int[2];
@@ -55,45 +55,38 @@ public void Contains480()
     this.Contains(0, ints);
 }
 [Test]
-[PexGeneratedBy(typeof(ConcurrentListTests))]
+[PexGeneratedBy(typeof(ConcurrentListHandWrittenTests))]
 public void Contains40()
 {
     int[] ints = new int[2];
     this.Contains(1, ints);
 }
 [Test]
-[PexGeneratedBy(typeof(ConcurrentListTests))]
+[PexGeneratedBy(typeof(ConcurrentListHandWrittenTests))]
 public void Contains825()
 {
     int[] ints = new int[3];
     this.Contains(0, ints);
 }
 [Test]
-[PexGeneratedBy(typeof(ConcurrentListTests))]
+[PexGeneratedBy(typeof(ConcurrentListHandWrittenTests))]
 public void Contains431()
 {
     int[] ints = new int[9];
     this.Contains(0, ints);
 }
 [Test]
-[PexGeneratedBy(typeof(ConcurrentListTests))]
+[PexGeneratedBy(typeof(ConcurrentListHandWrittenTests))]
 public void Contains600()
 {
     int[] ints = new int[10];
     this.Contains(0, ints);
 }
 [Test]
-[PexGeneratedBy(typeof(ConcurrentListTests))]
-public void Contains138()
+[PexGeneratedBy(typeof(ConcurrentListHandWrittenTests))]
+public void Contains884()
 {
-    int[] ints = new int[9];
-    this.Contains(1, ints);
-}
-[Test]
-[PexGeneratedBy(typeof(ConcurrentListTests))]
-public void Contains643()
-{
-    int[] ints = new int[43];
+    int[] ints = new int[35];
     this.Contains(1, ints);
 }
   }

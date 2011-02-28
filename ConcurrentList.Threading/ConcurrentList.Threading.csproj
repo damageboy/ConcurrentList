@@ -42,6 +42,8 @@
   <ItemGroup>
     <Compile Include="CrazyParallel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SaneParallel.cs" />
+    <Compile Include="TaskJoiner.cs" />
     <Compile Include="ThreadJoiner.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -15,22 +15,28 @@ using Microsoft.Pex.Framework.Generated;
 
 namespace ConcurrentList.UnitTests
 {
-  public partial class ConcurrentListTests
+  public partial class ConcurrentListHandWrittenTests
   {
 [Test]
-[PexGeneratedBy(typeof(ConcurrentListTests))]
+[PexGeneratedBy(typeof(ConcurrentListHandWrittenTests))]
+public void GetItem149()
+{
+    this.GetItem(0);
+}
+[Test]
+[PexGeneratedBy(typeof(ConcurrentListHandWrittenTests))]
 public void GetItem720()
 {
     this.GetItem(1);
 }
 [Test]
-[PexGeneratedBy(typeof(ConcurrentListTests))]
+[PexGeneratedBy(typeof(ConcurrentListHandWrittenTests))]
 public void GetItem517()
 {
     this.GetItem(2);
 }
 [Test]
-[PexGeneratedBy(typeof(ConcurrentListTests))]
+[PexGeneratedBy(typeof(ConcurrentListHandWrittenTests))]
 public void GetItem440()
 {
     this.GetItem(15);

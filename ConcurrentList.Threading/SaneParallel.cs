@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace ConcurrentList.Threading
 {
-  public static class CrazyParallel
+  public static class SaneParallel
   {
     private static int _threadCounter;
     private static int _maxThreads;
@@ -13,33 +15,31 @@ namespace ConcurrentList.Threading
 
     public static IDisposable Do(Action action, TimeSpan timeout)
     {
-      DateTime startTime = DateTime.Now;
+      DateTime startTime = DateTime.UtcNow;
 
-      ThreadStart loop = () =>
-      {
-        while (DateTime.Now - startTime < timeout)
-        {
+      var loop = new Task(() => {
+        while (DateTime.UtcNow - startTime < timeout) {
           action();
         }
-      };
+      });
 
-      var t = new Thread(loop);
-      t.Start();
+      loop.Start();
 
-      return new ThreadJoiner(t);
+
+      return new TaskJoiner(loop);
     }
 
     public static IDisposable For(int fromInclusive, int toExclusive, Action<int> action)
     {
       _threadCounter = 0;
       _maxThreads = 0;
-      var threads = new List<Thread>(toExclusive - fromInclusive);
-      for (int i = fromInclusive; i < toExclusive; i++)
+      var tasks = new List<Task>(toExclusive - fromInclusive);
+      for (var i = fromInclusive; i < toExclusive; i++)
       {
-        int local = i;
-        threads.Add(new Thread(() => {
+        var local = i;
+        tasks.Add(new Task(() => {
           Interlocked.Increment(ref _threadCounter);
-          Thread.Sleep(100); 
+          //Thread.Sleep(100);
           action(local);
           if (_threadCounter > _maxThreads)
             Interlocked.CompareExchange(ref _maxThreads, _threadCounter, _maxThreads);
@@ -47,29 +47,30 @@ namespace ConcurrentList.Threading
         }));
       }
 
-      foreach (var t in threads)
+      foreach (var t in tasks)
         t.Start();
 
-      return new ThreadJoiner(threads);
+      return new TaskJoiner(tasks);
     }
 
     public static IDisposable ForEach<T>(IEnumerable<T> source, Action<T> action)
     {
       _threadCounter = 0;
       _maxThreads = 0;
-      var threads = source.Select(local => new Thread(() => {
+
+      var tasks = source.Select(local => new Task(() => {
         Interlocked.Increment(ref _threadCounter);
-        Thread.Sleep(100);
+        //Thread.Sleep(100);
         action(local);
         if (_threadCounter > _maxThreads)
           Interlocked.CompareExchange(ref _maxThreads, _threadCounter, _maxThreads);
         Interlocked.Decrement(ref _threadCounter);
       })).ToList();
 
-      foreach (var t in threads)
+      foreach (var t in tasks)
         t.Start();
 
-      return new ThreadJoiner(threads);
+      return new TaskJoiner(tasks);
     }
   }
 }

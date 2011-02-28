@@ -49,55 +49,95 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConcurrentListPexTests.Constructor.g.cs">
+      <DependentUpon>ConcurrentListPexTests.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ConcurrentListPexTests.Contains.g.cs">
+      <DependentUpon>ConcurrentListPexTests.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ConcurrentListPexTests.CopyTo.g.cs">
+      <DependentUpon>ConcurrentListPexTests.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ConcurrentListPexTests.CountGet.g.cs">
+      <DependentUpon>ConcurrentListPexTests.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ConcurrentListPexTests.GetEnumerator.g.cs">
+      <DependentUpon>ConcurrentListPexTests.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ConcurrentListPexTests.IndexOf.g.cs">
+      <DependentUpon>ConcurrentListPexTests.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ConcurrentListPexTests.ItemGet.g.cs">
+      <DependentUpon>ConcurrentListPexTests.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ConcurrentListPexTests.ItemSet.g.cs">
+      <DependentUpon>ConcurrentListPexTests.cs</DependentUpon>
+    </Compile>
     <Compile Include="ConcurrentListTests.Add.g.cs">
-      <DependentUpon>ConcurrentListTests.cs</DependentUpon>
+      <DependentUpon>ConcurrentListHandWrittenTests.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ConcurrentListTests.AddParallelCrazy.g.cs">
+      <DependentUpon>ConcurrentListHandWrittenTests.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ConcurrentListTests.AddParallelSane.g.cs">
+      <DependentUpon>ConcurrentListHandWrittenTests.cs</DependentUpon>
     </Compile>
     <Compile Include="ConcurrentListTests.ClearIsNotSupported.g.cs">
-      <DependentUpon>ConcurrentListTests.cs</DependentUpon>
+      <DependentUpon>ConcurrentListHandWrittenTests.cs</DependentUpon>
     </Compile>
     <Compile Include="ConcurrentListTests.ConstructorShouldNotThrowException.g.cs">
-      <DependentUpon>ConcurrentListTests.cs</DependentUpon>
+      <DependentUpon>ConcurrentListHandWrittenTests.cs</DependentUpon>
     </Compile>
     <Compile Include="ConcurrentListTests.Contains.g.cs">
-      <DependentUpon>ConcurrentListTests.cs</DependentUpon>
+      <DependentUpon>ConcurrentListHandWrittenTests.cs</DependentUpon>
     </Compile>
     <Compile Include="ConcurrentListTests.CopyTo.g.cs">
-      <DependentUpon>ConcurrentListTests.cs</DependentUpon>
+      <DependentUpon>ConcurrentListHandWrittenTests.cs</DependentUpon>
     </Compile>
     <Compile Include="ConcurrentListTests.CopyToShouldThrowOnInvalidIndex.g.cs">
-      <DependentUpon>ConcurrentListTests.cs</DependentUpon>
+      <DependentUpon>ConcurrentListHandWrittenTests.cs</DependentUpon>
     </Compile>
     <Compile Include="ConcurrentListTests.Count.g.cs">
-      <DependentUpon>ConcurrentListTests.cs</DependentUpon>
+      <DependentUpon>ConcurrentListHandWrittenTests.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ConcurrentListTests.CountCrazy.g.cs">
+      <DependentUpon>ConcurrentListHandWrittenTests.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ConcurrentListTests.CountSane.g.cs">
+      <DependentUpon>ConcurrentListHandWrittenTests.cs</DependentUpon>
     </Compile>
     <Compile Include="ConcurrentListTests.CountShouldNotReturnInaccuratelyHighNumbers.g.cs">
-      <DependentUpon>ConcurrentListTests.cs</DependentUpon>
+      <DependentUpon>ConcurrentListHandWrittenTests.cs</DependentUpon>
     </Compile>
-    <Compile Include="ConcurrentListTests.cs" />
+    <Compile Include="ConcurrentListHandWrittenTests.cs" />
     <Compile Include="ConcurrentListTests.GetItem.g.cs">
-      <DependentUpon>ConcurrentListTests.cs</DependentUpon>
+      <DependentUpon>ConcurrentListHandWrittenTests.cs</DependentUpon>
     </Compile>
     <Compile Include="ConcurrentListTests.IndexOf.g.cs">
-      <DependentUpon>ConcurrentListTests.cs</DependentUpon>
+      <DependentUpon>ConcurrentListHandWrittenTests.cs</DependentUpon>
     </Compile>
     <Compile Include="ConcurrentListTests.InsertIsNotSupported.g.cs">
-      <DependentUpon>ConcurrentListTests.cs</DependentUpon>
+      <DependentUpon>ConcurrentListHandWrittenTests.cs</DependentUpon>
     </Compile>
     <Compile Include="ConcurrentListTests.IsReadOnlyReturnsFalse.g.cs">
-      <DependentUpon>ConcurrentListTests.cs</DependentUpon>
+      <DependentUpon>ConcurrentListHandWrittenTests.cs</DependentUpon>
     </Compile>
     <Compile Include="ConcurrentListTests.ItemShouldThrowOnInvalidIndex.g.cs">
-      <DependentUpon>ConcurrentListTests.cs</DependentUpon>
+      <DependentUpon>ConcurrentListHandWrittenTests.cs</DependentUpon>
     </Compile>
     <Compile Include="ConcurrentListTests.RemoveAtIsNotSupported.g.cs">
-      <DependentUpon>ConcurrentListTests.cs</DependentUpon>
+      <DependentUpon>ConcurrentListHandWrittenTests.cs</DependentUpon>
     </Compile>
     <Compile Include="ConcurrentListTests.RemoveIsNotSupported.g.cs">
-      <DependentUpon>ConcurrentListTests.cs</DependentUpon>
+      <DependentUpon>ConcurrentListHandWrittenTests.cs</DependentUpon>
     </Compile>
     <Compile Include="ConcurrentListTests.SetItem.g.cs">
-      <DependentUpon>ConcurrentListTests.cs</DependentUpon>
+      <DependentUpon>ConcurrentListHandWrittenTests.cs</DependentUpon>
     </Compile>
+    <Compile Include="ConcurrentListTTest.Add.g.cs">
+      <DependentUpon>ConcurrentListPexTests.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ConcurrentListPexTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\PexAssemblyInfo.cs" />
   </ItemGroup>

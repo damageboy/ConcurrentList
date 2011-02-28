@@ -10,7 +10,7 @@ namespace ConcurrentList.UnitTests
 {
   [TestFixture]
   [PexClass]
-  public partial class ConcurrentListTests
+  public partial class ConcurrentListHandWrittenTests
   {
     IList<int> _list;
 
@@ -19,7 +19,6 @@ namespace ConcurrentList.UnitTests
     {
       // For comparison: change the line below to initialize _list as a
       // List<int>, and the Add and Count tests are likely to fail.
-
       _list = new ConcurrentList<int>();
     }
 
@@ -35,9 +34,20 @@ namespace ConcurrentList.UnitTests
     [TestCase(2)]
     [TestCase(1000)]
     [PexMethod]
-    public void Count(int count)
+    public void CountCrazy(int count)
     {
       CrazyParallel.For(0, count, i => _list.Add(i)).Dispose();
+      Assert.That(_list.Count, Is.EqualTo(count));
+    }
+
+    [TestCase(0)]
+    [TestCase(1)]
+    [TestCase(2)]
+    [TestCase(1000)]
+    [PexMethod]
+    public void CountSane(int count)
+    {
+      SaneParallel.For(0, count, i => _list.Add(i)).Dispose();
       Assert.That(_list.Count, Is.EqualTo(count));
     }
 
@@ -49,7 +59,7 @@ namespace ConcurrentList.UnitTests
       List<int> integers = Enumerable.Range(0, 10000)
                                      .Select(i => random.Next(1, int.MaxValue))
                                      .ToList();
-
+      
       using (CrazyParallel.For(0, integers.Count, i => _list.Add(integers[i])))
       {
         while (_list.Count < integers.Count)
@@ -61,6 +71,7 @@ namespace ConcurrentList.UnitTests
           }
         }
       }
+      Console.WriteLine(CrazyParallel.MaxConcurrentThreads);
     }
 
     [Test]
@@ -115,9 +126,33 @@ namespace ConcurrentList.UnitTests
       Assert.That(_list[index], Is.EqualTo(element));
     }
 
+    [TestCase(0)]
+    [TestCase(1)]
+    [TestCase(2)]
+    [TestCase(100)]
+    [TestCase(10000)]    
+    public void Add(int count)
+    {
+      var random = new Random();
+      var i = 0;
+      var backupList = new List<int>();
+      while (i++ < count) {
+        var num = random.Next();
+        backupList.Add(num);
+        _list.Add(num);
+      }
+
+      Assert.That(_list.Count, Is.EqualTo(count));
+
+      for (i = 0; i < count; i++)
+        Assert.That(_list[i], Is.EqualTo(backupList[i]));
+    }
+
+
+
     [TestCase(10000)]
     [PexMethod(MaxBranches = 20000)]
-    public void Add(int count)
+    public void AddParallelCrazy(int count)
     {
       var random = new Random();
       var numbers = new HashSet<int>();
@@ -135,6 +170,28 @@ namespace ConcurrentList.UnitTests
         Assert.That(_list.Contains(x));
       }
     }
+
+    [TestCase(10000)]
+    [PexMethod(MaxBranches = 20000)]
+    public void AddParallelSane(int count)
+    {
+      var random = new Random();
+      var numbers = new HashSet<int>();
+      while (numbers.Count < count)
+      {
+        numbers.Add(random.Next());
+      }
+
+      SaneParallel.ForEach(numbers, x => _list.Add(x)).Dispose();
+
+      Assert.That(_list.Count, Is.EqualTo(numbers.Count));
+
+      foreach (var x in numbers)
+      {
+        Assert.That(_list.Contains(x));
+      }
+    }
+
 
     [TestCase(1, new int[] { 3, 1, 2 })]
     [TestCase(5, new int[] { 8, 9, 10 })]

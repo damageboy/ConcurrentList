@@ -15,19 +15,7 @@ using Microsoft.Pex.Framework.Generated;
 
 namespace ConcurrentList.UnitTests
 {
-  public partial class ConcurrentListTests
+  public partial class ConcurrentListHandWrittenTests
   {
-[Test]
-[PexGeneratedBy(typeof(ConcurrentListTests))]
-public void Count676()
-{
-    this.Count(0);
-}
-[Test]
-[PexGeneratedBy(typeof(ConcurrentListTests))]
-public void Count680()
-{
-    this.Count(1);
-}
   }
 }

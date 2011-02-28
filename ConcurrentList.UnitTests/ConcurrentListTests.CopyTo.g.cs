@@ -15,35 +15,34 @@ using Microsoft.Pex.Framework.Generated;
 
 namespace ConcurrentList.UnitTests
 {
-  public partial class ConcurrentListTests
+  public partial class ConcurrentListHandWrittenTests
   {
-
 [Test]
-[PexGeneratedBy(typeof(ConcurrentListTests))]
+[PexGeneratedBy(typeof(ConcurrentListHandWrittenTests))]
 public void CopyTo676()
 {
     this.CopyTo(0);
 }
 [Test]
-[PexGeneratedBy(typeof(ConcurrentListTests))]
+[PexGeneratedBy(typeof(ConcurrentListHandWrittenTests))]
 public void CopyTo680()
 {
     this.CopyTo(1);
 }
 [Test]
-[PexGeneratedBy(typeof(ConcurrentListTests))]
+[PexGeneratedBy(typeof(ConcurrentListHandWrittenTests))]
 public void CopyTo695()
 {
     this.CopyTo(2);
 }
 [Test]
-[PexGeneratedBy(typeof(ConcurrentListTests))]
+[PexGeneratedBy(typeof(ConcurrentListHandWrittenTests))]
 public void CopyTo113()
 {
     this.CopyTo(3);
 }
 [Test]
-[PexGeneratedBy(typeof(ConcurrentListTests))]
+[PexGeneratedBy(typeof(ConcurrentListHandWrittenTests))]
 public void CopyTo318()
 {
     this.CopyTo(15);

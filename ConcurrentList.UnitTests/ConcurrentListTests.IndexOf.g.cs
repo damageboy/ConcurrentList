@@ -15,24 +15,24 @@ using Microsoft.Pex.Framework.Generated;
 
 namespace ConcurrentList.UnitTests
 {
-  public partial class ConcurrentListTests
+  public partial class ConcurrentListHandWrittenTests
   {
 [Test]
-[PexGeneratedBy(typeof(ConcurrentListTests))]
+[PexGeneratedBy(typeof(ConcurrentListHandWrittenTests))]
 public void IndexOf985()
 {
     int[] ints = new int[0];
     this.IndexOf(0, ints);
 }
 [Test]
-[PexGeneratedBy(typeof(ConcurrentListTests))]
+[PexGeneratedBy(typeof(ConcurrentListHandWrittenTests))]
 public void IndexOf880()
 {
     int[] ints = new int[1];
     this.IndexOf(0, ints);
 }
 [Test]
-[PexGeneratedBy(typeof(ConcurrentListTests))]
+[PexGeneratedBy(typeof(ConcurrentListHandWrittenTests))]
 public void IndexOf740()
 {
     int[] ints = new int[1];
@@ -40,14 +40,14 @@ public void IndexOf740()
     this.IndexOf(0, ints);
 }
 [Test]
-[PexGeneratedBy(typeof(ConcurrentListTests))]
+[PexGeneratedBy(typeof(ConcurrentListHandWrittenTests))]
 public void IndexOf71()
 {
     int[] ints = new int[2];
     this.IndexOf(0, ints);
 }
 [Test]
-[PexGeneratedBy(typeof(ConcurrentListTests))]
+[PexGeneratedBy(typeof(ConcurrentListHandWrittenTests))]
 public void IndexOf480()
 {
     int[] ints = new int[2];
@@ -55,45 +55,38 @@ public void IndexOf480()
     this.IndexOf(0, ints);
 }
 [Test]
-[PexGeneratedBy(typeof(ConcurrentListTests))]
+[PexGeneratedBy(typeof(ConcurrentListHandWrittenTests))]
 public void IndexOf40()
 {
     int[] ints = new int[2];
     this.IndexOf(1, ints);
 }
 [Test]
-[PexGeneratedBy(typeof(ConcurrentListTests))]
+[PexGeneratedBy(typeof(ConcurrentListHandWrittenTests))]
 public void IndexOf825()
 {
     int[] ints = new int[3];
     this.IndexOf(0, ints);
 }
 [Test]
-[PexGeneratedBy(typeof(ConcurrentListTests))]
+[PexGeneratedBy(typeof(ConcurrentListHandWrittenTests))]
 public void IndexOf431()
 {
     int[] ints = new int[9];
     this.IndexOf(0, ints);
 }
 [Test]
-[PexGeneratedBy(typeof(ConcurrentListTests))]
+[PexGeneratedBy(typeof(ConcurrentListHandWrittenTests))]
 public void IndexOf600()
 {
     int[] ints = new int[10];
     this.IndexOf(0, ints);
 }
 [Test]
-[PexGeneratedBy(typeof(ConcurrentListTests))]
-public void IndexOf138()
+[PexGeneratedBy(typeof(ConcurrentListHandWrittenTests))]
+public void IndexOf536()
 {
-    int[] ints = new int[9];
-    this.IndexOf(1, ints);
-}
-[Test]
-[PexGeneratedBy(typeof(ConcurrentListTests))]
-public void IndexOf44()
-{
-    int[] ints = new int[26];
+    int[] ints = new int[40];
     this.IndexOf(1, ints);
 }
   }
