@@ -17,41 +17,5 @@ namespace ConcurrentList.UnitTests
 {
   public partial class ConcurrentListHandWrittenTests
   {
-[Test]
-[PexGeneratedBy(typeof(ConcurrentListHandWrittenTests))]
-public void AddParallelCrazy676()
-{
-    this.AddParallelCrazy(0);
-}
-[Test]
-[PexGeneratedBy(typeof(ConcurrentListHandWrittenTests))]
-public void AddParallelCrazy680()
-{
-    this.AddParallelCrazy(1);
-}
-[Test]
-[PexGeneratedBy(typeof(ConcurrentListHandWrittenTests))]
-public void AddParallelCrazy695()
-{
-    this.AddParallelCrazy(2);
-}
-[Test]
-[PexGeneratedBy(typeof(ConcurrentListHandWrittenTests))]
-public void AddParallelCrazy113()
-{
-    this.AddParallelCrazy(3);
-}
-[Test]
-[PexGeneratedBy(typeof(ConcurrentListHandWrittenTests))]
-public void AddParallelCrazy909()
-{
-    this.AddParallelCrazy(7);
-}
-[Test]
-[PexGeneratedBy(typeof(ConcurrentListHandWrittenTests))]
-public void AddParallelCrazy318()
-{
-    this.AddParallelCrazy(15);
-}
   }
 }

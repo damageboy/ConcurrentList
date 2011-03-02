@@ -17,11 +17,5 @@ namespace ConcurrentList.UnitTests
 {
   public partial class ConcurrentListHandWrittenTests
   {
-[Test]
-[PexGeneratedBy(typeof(ConcurrentListHandWrittenTests))]
-public void RemoveAtIsNotSupported01()
-{
-    this.RemoveAtIsNotSupported();
-}
   }
 }

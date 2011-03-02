@@ -23,12 +23,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
+    <DebugType>full</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.ExtendedReflection, Version=0.94.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -49,6 +50,54 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConcurrentListHandWrittenTests.AddParallelCrazy.g.cs">
+      <DependentUpon>ConcurrentListHandWrittenTests.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ConcurrentListHandWrittenTests.AddParallelSane.g.cs">
+      <DependentUpon>ConcurrentListHandWrittenTests.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ConcurrentListHandWrittenTests.ConstructorShouldNotThrowException.g.cs">
+      <DependentUpon>ConcurrentListHandWrittenTests.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ConcurrentListHandWrittenTests.Contains.g.cs">
+      <DependentUpon>ConcurrentListHandWrittenTests.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ConcurrentListHandWrittenTests.CopyTo.g.cs">
+      <DependentUpon>ConcurrentListHandWrittenTests.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ConcurrentListHandWrittenTests.CopyToShouldThrowOnInvalidIndex.g.cs">
+      <DependentUpon>ConcurrentListHandWrittenTests.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ConcurrentListHandWrittenTests.GetItem.g.cs">
+      <DependentUpon>ConcurrentListHandWrittenTests.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ConcurrentListHandWrittenTests.IndexOf.g.cs">
+      <DependentUpon>ConcurrentListHandWrittenTests.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ConcurrentListHandWrittenTests.InsertIsNotSupported.g.cs">
+      <DependentUpon>ConcurrentListHandWrittenTests.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ConcurrentListHandWrittenTests.IsReadOnlyReturnsFalse.g.cs">
+      <DependentUpon>ConcurrentListHandWrittenTests.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ConcurrentListHandWrittenTests.ItemShouldThrowOnInvalidIndex.g.cs">
+      <DependentUpon>ConcurrentListHandWrittenTests.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ConcurrentListHandWrittenTests.RemoveAtIsNotSupported.g.cs">
+      <DependentUpon>ConcurrentListHandWrittenTests.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ConcurrentListHandWrittenTests.RemoveIsNotSupported.g.cs">
+      <DependentUpon>ConcurrentListHandWrittenTests.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ConcurrentListHandWrittenTests.SetItem.g.cs">
+      <DependentUpon>ConcurrentListHandWrittenTests.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ConcurrentListPexTests.Add.g.cs">
+      <DependentUpon>ConcurrentListPexTests.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ConcurrentListPexTests.Clear.g.cs">
+      <DependentUpon>ConcurrentListPexTests.cs</DependentUpon>
+    </Compile>
     <Compile Include="ConcurrentListPexTests.Constructor.g.cs">
       <DependentUpon>ConcurrentListPexTests.cs</DependentUpon>
     </Compile>
@@ -106,9 +155,6 @@
     <Compile Include="ConcurrentListTests.CountSane.g.cs">
       <DependentUpon>ConcurrentListHandWrittenTests.cs</DependentUpon>
     </Compile>
-    <Compile Include="ConcurrentListTests.CountShouldNotReturnInaccuratelyHighNumbers.g.cs">
-      <DependentUpon>ConcurrentListHandWrittenTests.cs</DependentUpon>
-    </Compile>
     <Compile Include="ConcurrentListHandWrittenTests.cs" />
     <Compile Include="ConcurrentListTests.GetItem.g.cs">
       <DependentUpon>ConcurrentListHandWrittenTests.cs</DependentUpon>
@@ -138,8 +184,31 @@
       <DependentUpon>ConcurrentListPexTests.cs</DependentUpon>
     </Compile>
     <Compile Include="ConcurrentListPexTests.cs" />
+    <Compile Include="CrazyParallelTests.Add.g.cs">
+      <DependentUpon>CrazyParallelTests.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrazyParallelTests.Clear.g.cs">
+      <DependentUpon>CrazyParallelTests.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrazyParallelTests.Count.g.cs">
+      <DependentUpon>CrazyParallelTests.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrazyParallelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\PexAssemblyInfo.cs" />
+    <Compile Include="SaneParallelTests.Add.g.cs">
+      <DependentUpon>SaneParallelTests.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SaneParallelTests.Clear.g.cs">
+      <DependentUpon>SaneParallelTests.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SaneParallelTests.Count.g.cs">
+      <DependentUpon>SaneParallelTests.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SaneParallelTests.CountAlwaysPointsToAnExistingValue.g.cs">
+      <DependentUpon>SaneParallelTests.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SaneParallelTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ConcurrentList.Threading\ConcurrentList.Threading.csproj">
@@ -150,6 +219,9 @@
       <Project>{EC64FF5B-C17E-478B-94FC-EF8773345989}</Project>
       <Name>ConcurrentList</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="SeriesLength.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

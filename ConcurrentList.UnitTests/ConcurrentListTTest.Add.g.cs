@@ -17,15 +17,5 @@ namespace ConcurrentList.UnitTests
 {
   public partial class ConcurrentListPexTests
   {
-[Test]
-[PexGeneratedBy(typeof(ConcurrentListPexTests))]
-public void Add441()
-{
-    ConcurrentList<int> concurrentList;
-    concurrentList = new ConcurrentList<int>();
-    this.Add<int>(concurrentList, 0);
-    PexAssert.IsNotNull((object)concurrentList);
-    PexAssert.AreEqual<int>(1, concurrentList.Count);
-}
   }
 }

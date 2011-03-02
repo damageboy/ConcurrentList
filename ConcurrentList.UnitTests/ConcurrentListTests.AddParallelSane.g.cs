@@ -17,48 +17,5 @@ namespace ConcurrentList.UnitTests
 {
   public partial class ConcurrentListHandWrittenTests
   {
-[Test]
-[PexGeneratedBy(typeof(ConcurrentListHandWrittenTests))]
-public void AddParallelSane676()
-{
-    this.AddParallelSane(0);
-}
-[Test]
-[PexGeneratedBy(typeof(ConcurrentListHandWrittenTests))]
-public void AddParallelSane680()
-{
-    this.AddParallelSane(1);
-}
-[Test]
-[PexGeneratedBy(typeof(ConcurrentListHandWrittenTests))]
-public void AddParallelSane695()
-{
-    this.AddParallelSane(2);
-}
-[Test]
-[PexGeneratedBy(typeof(ConcurrentListHandWrittenTests))]
-public void AddParallelSane113()
-{
-    this.AddParallelSane(3);
-}
-[Test]
-[PexGeneratedBy(typeof(ConcurrentListHandWrittenTests))]
-public void AddParallelSane909()
-{
-    this.AddParallelSane(7);
-}
-[Test]
-[PexGeneratedBy(typeof(ConcurrentListHandWrittenTests))]
-public void AddParallelSane318()
-{
-    this.AddParallelSane(15);
-}
-[Test]
-[PexGeneratedBy(typeof(ConcurrentListHandWrittenTests))]
-[Ignore("the test state was: path bounds exceeded")]
-public void AddParallelSane622()
-{
-    this.AddParallelSane(63);
-}
   }
 }

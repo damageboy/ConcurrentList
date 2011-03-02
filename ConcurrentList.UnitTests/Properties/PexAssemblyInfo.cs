@@ -4,6 +4,11 @@ using Microsoft.Pex.Framework.Instrumentation;
 using Microsoft.Pex.Framework.Moles;
 using Microsoft.Pex.Framework.Settings;
 using Microsoft.Pex.Framework.Validation;
+using Microsoft.Pex.Framework.Suppression;
+using NUnit.Framework;
+using ConcurrentList.Threading;
+using System.IO;
+using System;
 
 // Microsoft.Pex.Framework.Settings
 [assembly: PexAssemblySettings(TestFramework = "NUnit")]
@@ -23,3 +28,12 @@ using Microsoft.Pex.Framework.Validation;
 [assembly: PexChooseAsBehavedCurrentBehavior]
 
 [assembly: PexInstrumentAssembly("ConcurrentList")]
+[assembly: PexSuppressStaticFieldStore(typeof(Assert), "counter")]
+[assembly: PexSuppressUninstrumentedMethodFromType("Microsoft.Win32.SafeNativeMethods")]
+[assembly: PexSuppressUninstrumentedMethodFromType(typeof(CrazyParallel))]
+[assembly: PexSuppressUninstrumentedMethodFromType(typeof(TextWriter))]
+[assembly: PexSuppressUninstrumentedMethodFromType("ConcurrentList.Threading.ThreadJoiner")]
+[assembly: PexSuppressUninstrumentedMethodFromType(typeof(Random))]
+[assembly: PexSuppressUninstrumentedMethodFromType(typeof(Environment))]
+[assembly: PexSuppressUninstrumentedMethodFromType(typeof(SaneParallel))]
+[assembly: PexSuppressUninstrumentedMethodFromType("ConcurrentList.Threading.TaskJoiner")]

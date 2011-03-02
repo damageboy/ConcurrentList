@@ -12,6 +12,7 @@
 using System;
 using NUnit.Framework;
 using Microsoft.Pex.Framework.Generated;
+using ConcurrentList;
 
 namespace ConcurrentList.UnitTests
 {
@@ -20,7 +21,7 @@ namespace ConcurrentList.UnitTests
 [Test]
 [PexGeneratedBy(typeof(ConcurrentListPexTests))]
 [ExpectedException(typeof(ArgumentOutOfRangeException))]
-public void ItemSetThrowsArgumentOutOfRangeException816()
+public void ItemSetThrowsArgumentOutOfRangeException356()
 {
     ConcurrentList<int> concurrentList;
     concurrentList = new ConcurrentList<int>();
@@ -29,7 +30,7 @@ public void ItemSetThrowsArgumentOutOfRangeException816()
 [Test]
 [PexGeneratedBy(typeof(ConcurrentListPexTests))]
 [ExpectedException(typeof(ArgumentOutOfRangeException))]
-public void ItemSetThrowsArgumentOutOfRangeException26()
+public void ItemSetThrowsArgumentOutOfRangeException487()
 {
     ConcurrentList<int> concurrentList;
     concurrentList = new ConcurrentList<int>();

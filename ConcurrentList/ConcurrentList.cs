@@ -1,91 +1,128 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Threading;
 
 
 namespace ConcurrentList
 {
+  struct IntCacheLinePad
+  {
+    private unsafe fixed byte Pad[60];
+  }
+  [StructLayout(LayoutKind.Sequential, Pack=1)]
   public class ConcurrentList<T> : IList<T>
   {
+    private int _nextIndex;
+    private int _count;
+    
     static readonly int[] Sizes;
     static readonly int[] Counts;
     const int NUM_BUCKETS = 29;
     const int FIRST_SIZE = 8;
 
 
-
-
-    static ConcurrentList ()
+    static ConcurrentList()
     {
       Sizes = new int[NUM_BUCKETS];
       Counts = new int[NUM_BUCKETS];
 
       Sizes[0] = FIRST_SIZE;
       Counts[0] = FIRST_SIZE;
-      
-      for (int i = 1; i < NUM_BUCKETS; i++) {
+
+      for (int i = 1; i < NUM_BUCKETS; i++)
+      {
         Sizes[i] = Sizes[i - 1] << 1;
         Counts[i] = Counts[i - 1] + Sizes[i];
       }
     }
 
-    int _nextIndex;
-    int _fuzzyCount;
-    readonly T[][] _array;
+    private readonly T[][] _array;
 
-    public ConcurrentList ()
+    public ConcurrentList()
     {
       _array = new T[NUM_BUCKETS][];
     }
 
-    public T this[int index] {
-      get
-      {
-        if (index < 0 || index >= Count) {
-          throw new ArgumentOutOfRangeException ("index");
-        }
+    private const short SPIN_COUNT = 100;
 
-        int arrayIndex = GetArrayIndex(index);
+    public T this[int index]
+    {
+      get {
+        if (index < 0 || index >= _count)
+          throw new ArgumentOutOfRangeException("index");
+
+        var arrayIndex = GetArrayIndex(index);
         if (arrayIndex > 0)
-        {
           index -= Counts[arrayIndex - 1];
-        }
 
         return _array[arrayIndex][index];
       }
       set {
-        if (index < 0 || index >= Count) {
-          throw new ArgumentOutOfRangeException ("index");
-        }
-        
-        int arrayIndex = GetArrayIndex (index);
-        if (arrayIndex > 0) {
+        if (index < 0 || index >= _count)
+          throw new ArgumentOutOfRangeException("index");
+
+        var arrayIndex = GetArrayIndex(index);
+        if (arrayIndex > 0)
           index -= Counts[arrayIndex - 1];
-        }
-        
+
         _array[arrayIndex][index] = value;
       }
     }
 
-    public int Count {
-      get {
-        //int count = _index;
-        
-        //if (count > _fuzzyCount) {
-        //  SpinWait.SpinUntil (() => count <= _fuzzyCount);
-        //}
-        
-        //return count;
-        return _fuzzyCount;
-      }
+
+
+    public void Clear()
+    {
+      //long expectedLong;
+      var spinCount = 0;
+
+      var frozenNext = Interlocked.Exchange(ref _nextIndex, 0);
+      //expectedLong = ((long) frozenNext << 32) | frozenNext;
+      while (Interlocked.CompareExchange(ref _count, 0, frozenNext) != frozenNext)
+        if (++spinCount == SPIN_COUNT)
+        {
+          // Someone is doing insane number of concurrent additions for us to be
+          // stuck so far..., better go sleep for a while to let some other threads progress
+          Thread.Sleep(0);
+          spinCount = 0;
+        }
+
     }
 
-    public void Add (T element)
+#if HELL_FROZE_OVER
+    public void ClearX()
     {
-      int index = Interlocked.Increment (ref _nextIndex) - 1;
-      int adjustedIndex = index;
-      
-      int arrayIndex = GetArrayIndex (adjustedIndex);
+      var frozenNext = Interlocked.Exchange(ref _nextIndex, 0);
+    start_clear:      
+      var spinCount = 0;
+      while (_count != frozenNext)
+        if (++spinCount == SPIN_COUNT) {
+          // Someone is doing insane number of concurrent additions for us to be
+          // stuck so far..., better go sleep for a while to let some other threads progress
+          Thread.Sleep(0);
+          spinCount = 0;
+        }
+      Thread.MemoryBarrier();
+      //Interlocked.Exchange(ref _fuzzyCount, index + 1);
+      if (Interlocked.CompareExchange(ref _count, 0, frozenNext) == frozenNext)
+        return;
+
+      goto start_clear;
+    }
+#endif
+
+    public int Count
+    {
+      get { return _count; }
+    }
+
+    public void Add(T element)
+    {
+      var index = Interlocked.Increment(ref _nextIndex) - 1;
+      var adjustedIndex = index;
+
+      var arrayIndex = GetArrayIndex(adjustedIndex);
 
 #if HELL_FROZE_OVER
       var prevCount = 0;
@@ -95,15 +132,14 @@ namespace ConcurrentList
         throw new Exception("Booboo");
 #endif
 
-      if (arrayIndex > 0) {
+      if (arrayIndex > 0)
         adjustedIndex -= Counts[arrayIndex - 1];
-      }
-      
+
       if (_array[arrayIndex] == null) {
         int arrayLength = Sizes[arrayIndex];
-        Interlocked.CompareExchange (ref _array[arrayIndex], new T[arrayLength], null);
+        Interlocked.CompareExchange(ref _array[arrayIndex], new T[arrayLength], null);
       }
-      
+
       _array[arrayIndex][adjustedIndex] = element;
 
       // Do a "smart" spin loop, try spinning for a while waiting for the _fuzzyCount to hit the right value
@@ -111,65 +147,82 @@ namespace ConcurrentList
       // once it hits the right value, do a compare and exchange, although it is somewhat superflous at this point
       // 
       var spinCount = 0;
-      while (index != _fuzzyCount) {
-        if (++spinCount == 1000) {
+
+#if HELL_FROZE_OVER      
+      while (_count != index)
+        if (++spinCount == SPIN_COUNT) {
           // Someone is doing insane number of concurrent additions for us to be
           // stuck so far..., better go sleep for a while to let some other threads progress
           Thread.Sleep(0);
           spinCount = 0;
-          continue;
         }
+
+      if (Interlocked.CompareExchange(ref _count, index + 1, index) == index)
+        return;
+
+      throw new Exception("WTF");
+#endif
+
+      while (Interlocked.CompareExchange(ref _count, index + 1, index) != index) {
+        if (++spinCount != SPIN_COUNT) continue;
+        // Someone is doing insane number of concurrent additions for us to be
+        // stuck so far..., better go sleep for a while to let some other threads progress
+        Thread.Sleep(0);
+        spinCount = 0;
       }
-      //Interlocked.Exchange(ref _fuzzyCount, index + 1);
-      if (Interlocked.CompareExchange(ref _fuzzyCount, index + 1, index) == index)
-        return;     
-      throw new Exception("WTF");      
+
+
     }
 
-    public bool Contains (T element)
+    public bool Contains(T element)
     {
-      return IndexOf (element) != -1;
+      return IndexOf(element) != -1;
     }
 
-    public int IndexOf (T element)
+    public int IndexOf(T element)
     {
       IEqualityComparer<T> equalityComparer = EqualityComparer<T>.Default;
-      
+
       int count = Count;
-      for (int i = 0; i < count; i++) {
-        if (equalityComparer.Equals (this[i], element)) {
+      for (int i = 0; i < count; i++)
+      {
+        if (equalityComparer.Equals(this[i], element))
+        {
           return i;
         }
       }
-      
+
       return -1;
     }
 
-    public void CopyTo (T[] array, int index)
+    public void CopyTo(T[] array, int index)
     {
-      if (array == null) {
-        throw new ArgumentNullException ("array");
+      if (array == null)
+      {
+        throw new ArgumentNullException("array");
       }
-      
+
       var count = Count;
-      if (array.Length - index < count) {
-        throw new ArgumentException ("There is not enough available space in the destination array.");
+      if (array.Length - index < count)
+      {
+        throw new ArgumentException("There is not enough available space in the destination array.");
       }
-      
+
       var arrayIndex = 0;
       var elementsRemaining = count;
-      while (elementsRemaining > 0) {
+      while (elementsRemaining > 0)
+      {
         var source = _array[arrayIndex++];
-        var elementsToCopy = Math.Min (source.Length, elementsRemaining);
+        var elementsToCopy = Math.Min(source.Length, elementsRemaining);
         var startIndex = count - elementsRemaining;
-        
-        Array.Copy (source, 0, array, startIndex, elementsToCopy);
-        
+
+        Array.Copy(source, 0, array, startIndex, elementsToCopy);
+
         elementsRemaining -= elementsToCopy;
       }
     }
 
-    public IEnumerator<T> GetEnumerator ()
+    public IEnumerator<T> GetEnumerator()
     {
       var count = Count;
       var ai = 0;
@@ -185,68 +238,64 @@ namespace ConcurrentList
 
     private static int GetArrayIndex(int index)
     {
-      return LOG2Hack.Log2(index/FIRST_SIZE + 1);
+      return LOG2Hack.Log2(index / FIRST_SIZE + 1);
     }
 
     //private static int GetArrayIndex (int count)
     //{
     //  int arrayIndex = 0;
-      
+
     //  if ((count & 0xFFFF0000) != 0) {
     //    count >>= 16;
     //    arrayIndex |= 16;
     //  }
-      
+
     //  if ((count & 0xFF00) != 0) {
     //    count >>= 8;
     //    arrayIndex |= 8;
     //  }
-      
+
     //  if ((count & 0xF0) != 0) {
     //    count >>= 4;
     //    arrayIndex |= 4;
     //  }
-      
+
     //  if ((count & 0xC) != 0) {
     //    count >>= 2;
     //    arrayIndex |= 2;
     //  }
-      
+
     //  if ((count & 0x2) != 0) {
     //    count >>= 1;
     //    arrayIndex |= 1;
     //  }
-      
+
     //  return arrayIndex;
     //}
 
-    void IList<T>.Insert (int index, T element)
+    void IList<T>.Insert(int index, T element)
     {
-      throw new NotSupportedException ();
+      throw new NotSupportedException();
     }
 
-    void IList<T>.RemoveAt (int index)
+    void IList<T>.RemoveAt(int index)
     {
-      throw new NotSupportedException ();
+      throw new NotSupportedException();
     }
 
-    bool ICollection<T>.IsReadOnly {
+    bool ICollection<T>.IsReadOnly
+    {
       get { return false; }
     }
 
-    void ICollection<T>.Clear ()
+    bool ICollection<T>.Remove(T element)
     {
-      throw new NotSupportedException ();
+      throw new NotSupportedException();
     }
 
-    bool ICollection<T>.Remove (T element)
+    System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
     {
-      throw new NotSupportedException ();
-    }
-
-    System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator ()
-    {
-      return GetEnumerator ();
+      return GetEnumerator();
     }
   }
 }

@@ -24,6 +24,14 @@ namespace ConcurrentList.UnitTests
 
     [PexGenericArguments(typeof(int))]
     [PexMethod]
+    public void Clear<T>([PexAssumeUnderTest]ConcurrentList<T> target)
+    {
+      target.Clear();
+      // TODO: add assertions to method ConcurrentListTTest.Clear(ConcurrentList`1<!!0>)
+    }
+
+    [PexGenericArguments(typeof(int))]
+    [PexMethod]
     public void ItemSet<T>(
         [PexAssumeUnderTest]ConcurrentList<T> target,
         int index,

@@ -13,6 +13,7 @@ using System;
 using NUnit.Framework;
 using Microsoft.Pex.Framework.Generated;
 using Microsoft.Pex.Framework;
+using ConcurrentList;
 
 namespace ConcurrentList.UnitTests
 {
@@ -21,7 +22,7 @@ namespace ConcurrentList.UnitTests
 [Test]
 [PexGeneratedBy(typeof(ConcurrentListPexTests))]
 [ExpectedException(typeof(ArgumentNullException))]
-public void CopyToThrowsArgumentNullException300()
+public void CopyToThrowsArgumentNullException67()
 {
     ConcurrentList<int> concurrentList;
     concurrentList = new ConcurrentList<int>();
@@ -41,7 +42,7 @@ public void CopyTo474()
 [Test]
 [PexGeneratedBy(typeof(ConcurrentListPexTests))]
 [ExpectedException(typeof(ArgumentException))]
-public void CopyToThrowsArgumentException371()
+public void CopyToThrowsArgumentException340()
 {
     ConcurrentList<int> concurrentList;
     concurrentList = new ConcurrentList<int>();

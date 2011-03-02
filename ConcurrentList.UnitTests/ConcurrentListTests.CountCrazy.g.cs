@@ -17,17 +17,5 @@ namespace ConcurrentList.UnitTests
 {
   public partial class ConcurrentListHandWrittenTests
   {
-[Test]
-[PexGeneratedBy(typeof(ConcurrentListHandWrittenTests))]
-public void CountCrazy676()
-{
-    this.CountCrazy(0);
-}
-[Test]
-[PexGeneratedBy(typeof(ConcurrentListHandWrittenTests))]
-public void CountCrazy680()
-{
-    this.CountCrazy(1);
-}
   }
 }

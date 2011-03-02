@@ -8,3 +8,4 @@ ConcurrentList.PerformanceTests/bin/
 ConcurrentList.PerformanceTests/obj/
 ConcurrentList.Threading/bin/
 ConcurrentList.Threading/obj/
+*.user

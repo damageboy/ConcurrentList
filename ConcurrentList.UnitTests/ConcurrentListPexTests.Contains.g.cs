@@ -12,6 +12,7 @@
 using Microsoft.Pex.Framework;
 using NUnit.Framework;
 using Microsoft.Pex.Framework.Generated;
+using ConcurrentList;
 
 namespace ConcurrentList.UnitTests
 {
