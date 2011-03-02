@@ -6,11 +6,6 @@ using System.Threading;
 
 namespace ConcurrentList
 {
-  struct IntCacheLinePad
-  {
-    private unsafe fixed byte Pad[60];
-  }
-  [StructLayout(LayoutKind.Sequential, Pack=1)]
   public class ConcurrentList<T> : IList<T>
   {
     private int _nextIndex;
