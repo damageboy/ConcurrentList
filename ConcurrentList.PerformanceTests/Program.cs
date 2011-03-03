@@ -17,6 +17,10 @@ namespace ConcurrentList.PerformanceTests
       Console.Write("Press Enter to start running trials, then Escape at any time to quit.");
       Console.ReadLine();
 
+      var xxx = new ConcurrentList<int>();
+      xxx.Add(0x666);
+      Debugger.Break();
+
       var stop = new ManualResetEvent(false);
       var finished = new ManualResetEvent(false);
 
@@ -27,6 +31,8 @@ namespace ConcurrentList.PerformanceTests
         {
           var list = new List<int>();
           var concurrentList = new ConcurrentList<int>();
+
+          Debugger.Break();
 
           TimeSpan listPerf = Benchmark(() => { lock (list) list.Add(0); }, ThreadCount, N);
           TimeSpan concurrentListPerf = Benchmark(() => concurrentList.Add(0), ThreadCount, N);

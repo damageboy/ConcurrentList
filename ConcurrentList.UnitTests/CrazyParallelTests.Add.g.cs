@@ -23,17 +23,5 @@ public void Add676()
 {
     this.Add(0);
 }
-[Test]
-[PexGeneratedBy(typeof(CrazyParallelTests))]
-public void Add680()
-{
-    this.Add(1);
-}
-[Test]
-[PexGeneratedBy(typeof(CrazyParallelTests))]
-public void Add695()
-{
-    this.Add(2);
-}
   }
 }

@@ -10,24 +10,10 @@
 // compile anymore, you may delete this file and invoke Pex again.
 // </auto-generated>
 using System;
-using NUnit.Framework;
-using Microsoft.Pex.Framework.Generated;
 
 namespace ConcurrentList.UnitTests
 {
-  public partial class CrazyParallelTests
-  {
-[Test]
-[PexGeneratedBy(typeof(CrazyParallelTests))]
-public void Count676()
-{
-    this.Count(0);
-}
-[Test]
-[PexGeneratedBy(typeof(CrazyParallelTests))]
-public void Count680()
-{
-    this.Count(1);
-}
-  }
+    public partial class CrazyParallelTests
+    {
+    }
 }

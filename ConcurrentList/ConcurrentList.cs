@@ -112,8 +112,16 @@ namespace ConcurrentList
       get { return _count; }
     }
 
-    public void Add(T element)
+    public unsafe void Add(T element)
     {
+      // This is rougly translated on x64 to (which is sub-optimal, but whatever):
+      // mov     eax,1
+      // lock xadd dword ptr [rsi+10h],eax
+      // inc     eax
+      // lea     ebp,[rax-1]
+      // mov     r13d,ebp
+
+
       var index = Interlocked.Increment(ref _nextIndex) - 1;
       var adjustedIndex = index;
 
@@ -132,6 +140,18 @@ namespace ConcurrentList
 
       if (_array[arrayIndex] == null) {
         int arrayLength = Sizes[arrayIndex];
+        //  Unfortunately this is some obscure call to COMInterlocked::CompareExchangeObject, which we shouldn't care
+        //  about too much since it's not really in the critical path
+        //  lea     r8,[mscorlib_ni+0x1ad2 (000007fe`dc0e1ad2)]
+        //  call    clr!JIT_Ldelema_Ref (000007fe`efeca2e0)
+        //  mov     rdi,rax
+        //  movsxd  rdx,ebx
+        //  lea     rcx,[mscorlib_ni+0x1ad2 (000007fe`dc0e1ad2)]
+        //  call    clr!JIT_NewArr1VC_MP_InlineGetThread (000007fe`efe72f90)
+        //  xor     r8d,r8d
+        //  mov     rdx,rax
+        //  mov     rcx,rdi
+        //  call    clr!COMInterlocked::CompareExchangeObject (000007fe`efeb3b30)
         Interlocked.CompareExchange(ref _array[arrayIndex], new T[arrayLength], null);
       }
 
@@ -157,7 +177,11 @@ namespace ConcurrentList
 
       throw new Exception("WTF");
 #endif
-
+      // This is rougly translated on x64 to::
+      // lea     ebx,[rbp+1]
+      // mov     eax,ebp
+      // lock cmpxchg dword ptr [rsi+14h],ebx
+      // cmp     eax,ebp
       while (Interlocked.CompareExchange(ref _count, index + 1, index) != index) {
         if (++spinCount != SPIN_COUNT) continue;
         // Someone is doing insane number of concurrent additions for us to be
@@ -165,8 +189,6 @@ namespace ConcurrentList
         Thread.Sleep(0);
         spinCount = 0;
       }
-
-
     }
 
     public bool Contains(T element)
@@ -235,38 +257,6 @@ namespace ConcurrentList
     {
       return LOG2Hack.Log2(index / FIRST_SIZE + 1);
     }
-
-    //private static int GetArrayIndex (int count)
-    //{
-    //  int arrayIndex = 0;
-
-    //  if ((count & 0xFFFF0000) != 0) {
-    //    count >>= 16;
-    //    arrayIndex |= 16;
-    //  }
-
-    //  if ((count & 0xFF00) != 0) {
-    //    count >>= 8;
-    //    arrayIndex |= 8;
-    //  }
-
-    //  if ((count & 0xF0) != 0) {
-    //    count >>= 4;
-    //    arrayIndex |= 4;
-    //  }
-
-    //  if ((count & 0xC) != 0) {
-    //    count >>= 2;
-    //    arrayIndex |= 2;
-    //  }
-
-    //  if ((count & 0x2) != 0) {
-    //    count >>= 1;
-    //    arrayIndex |= 1;
-    //  }
-
-    //  return arrayIndex;
-    //}
 
     void IList<T>.Insert(int index, T element)
     {
