@@ -19,7 +19,8 @@ namespace ConcurrentList.PerformanceTests
 
       var xxx = new ConcurrentList<int>();
       xxx.Add(0x666);
-      Debugger.Break();
+      //Debugger.Break();
+      xxx = null;
 
       var stop = new ManualResetEvent(false);
       var finished = new ManualResetEvent(false);

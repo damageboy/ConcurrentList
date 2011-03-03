@@ -148,6 +148,9 @@
     <Compile Include="CrazyParallelTests.Clear.g.cs">
       <DependentUpon>CrazyParallelTests.cs</DependentUpon>
     </Compile>
+    <Compile Include="CrazyParallelTests.Count.g.cs">
+      <DependentUpon>CrazyParallelTests.cs</DependentUpon>
+    </Compile>
     <Compile Include="CrazyParallelTests.cs" />
     <Compile Include="Log2HackTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
